@@ -1,0 +1,39 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+bool pos(long long int m,vector<int>rec,long long int r,vector<int>&n,vector<int>&p){
+    long long int money=0;
+    for(int i=0;i<3;i++){
+        long long int req=m*rec[i];
+        req=req-n[i];
+        if(req>0)money=money+req*p[i];
+    }
+    if(money<=r)return true;
+    return false;
+}
+int main() {
+    string st;cin>>st;
+    int l=st.length();
+    vector<int>n(3,0);
+    vector<int>p(3,0);
+    for(int i=0;i<3;i++)cin>>n[i];
+    for(int i=0;i<3;i++)cin>>p[i];
+    long long int r;cin>>r;
+    vector<int>rec(3,0);
+    for(int i=0;i<l;i++){
+        if(st[i]=='B')rec[0]++;
+        if(st[i]=='S')rec[1]++;
+        if(st[i]=='C')rec[2]++;
+    }
+    long long int s=0;
+    long long int e=1e15;
+    long long int mid=s+(e-s)/2;
+    long long int ans=0;
+    while(s<=e){
+        mid=s+(e-s)/2;
+        if(pos(mid,rec,r,n,p)){ans=mid;s=mid+1;}
+        else {e=mid-1;}
+    }
+    cout<<ans<<"\n";
+    return 0;
+}
